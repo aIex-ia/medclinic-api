@@ -64,7 +64,7 @@ export class AuthService {
     const token = jwt.sign(
       { id: user.id, role: user.role },
       secret,
-      { expiresIn }
+      { expiresIn: expiresIn as any }
     );
 
     const userResponse: UserResponseDTO = {
