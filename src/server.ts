@@ -1,20 +1,18 @@
 import 'reflect-metadata';
-import express, { Request, Response, NextFunction } from 'express';
+import express from 'express';
 import { AppDataSource } from './database/data-source';
 import * as dotenv from 'dotenv';
+import { authRoutes } from './routes/authRoutes';
+import { errorMiddleware } from './middlewares/errorMiddleware';
 
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 
-// Routes will be added here
+app.use('/auth', authRoutes);
 
-// Global Error Handler
-app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.error(err);
-  res.status(500).json({ error: 'Internal Server Error' });
-});
+app.use(errorMiddleware);
 
 const PORT = process.env.PORT || 3000;
 
