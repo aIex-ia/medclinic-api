@@ -6,6 +6,10 @@ import jwt from 'jsonwebtoken';
 
 export class AuthService {
   async register(data: CreateUserDTO): Promise<UserResponseDTO> {
+    if (!data) {
+      throw new AppError('Nenhum dado fornecido no corpo da requisição', 400);
+    }
+
     const { nome, email, senha } = data;
 
     if (!nome || !email || !senha) {
@@ -42,6 +46,9 @@ export class AuthService {
   }
 
   async login(data: LoginDTO): Promise<{ token: string; user: UserResponseDTO }> {
+    if (!data) {
+      throw new AppError('Nenhum dado fornecido no corpo da requisição', 400);
+    }
     const { email, senha } = data;
 
     if (!email || !senha) {
