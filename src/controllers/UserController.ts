@@ -4,7 +4,13 @@ import { UserRepository } from '../repositories/UserRepository';
 import { AppError } from '../utils/AppError';
 import { UserResponseDTO } from '../dtos/UserDTOs';
 
+/**
+ * Controller responsável por lidar com requisições relacionadas a usuários.
+ */
 export class UserController {
+  /**
+   * Retorna os dados do usuário autenticado no momento.
+   */
   async getMe(req: AuthRequest, res: Response, next: NextFunction) {
     try {
       const userId = req.user?.id;
