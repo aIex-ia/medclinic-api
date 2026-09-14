@@ -2,9 +2,7 @@ import 'reflect-metadata';
 import express from 'express';
 import { AppDataSource } from './database/data-source';
 import * as dotenv from 'dotenv';
-import { authRoutes } from './routes/authRoutes';
-import { userRoutes } from './routes/userRoutes';
-import { adminRoutes } from './routes/adminRoutes';
+import routes from './routes';
 import { errorMiddleware } from './middlewares/errorMiddleware';
 
 dotenv.config();
@@ -12,9 +10,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 
-app.use('/auth', authRoutes);
-app.use('/users', userRoutes);
-app.use('/admin', adminRoutes);
+app.use('/', routes);
 
 app.use(errorMiddleware);
 
