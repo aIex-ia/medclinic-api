@@ -70,12 +70,13 @@ export class AuthService {
       throw new AppError('JWT_SECRET não configurado no ambiente', 500);
     }
 
-    const expiresIn = process.env.JWT_EXPIRES_IN || '1h';
+    const expiresInStr = process.env.JWT_EXPIRES_IN || '3600';
+    const expiresIn = parseInt(expiresInStr, 10);
 
     const token = jwt.sign(
       { id: user.id, role: user.role },
       secret,
-      { expiresIn: expiresIn as jwt.SignOptions['expiresIn'] }
+      { expiresIn: expiresIn }
     );
 
     const userResponse: UserResponseDTO = {
