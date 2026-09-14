@@ -33,7 +33,11 @@ export const authMiddleware = (
     return next(new AppError('Token mal formatado', 401));
   }
 
-  const secret = process.env.JWT_SECRET || 'supersecret';
+  const secret = process.env.JWT_SECRET;
+  
+  if (!secret) {
+    return next(new AppError('JWT_SECRET não configurado no ambiente', 500));
+  }
 
   try {
     const decoded = jwt.verify(token, secret) as { id: string; role: Role };

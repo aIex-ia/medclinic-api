@@ -65,13 +65,17 @@ export class AuthService {
       throw new AppError('Credenciais inválidas', 401);
     }
 
-    const secret = process.env.JWT_SECRET || 'supersecret';
+    const secret = process.env.JWT_SECRET;
+    if (!secret) {
+      throw new AppError('JWT_SECRET não configurado no ambiente', 500);
+    }
+
     const expiresIn = process.env.JWT_EXPIRES_IN || '1h';
 
     const token = jwt.sign(
       { id: user.id, role: user.role },
       secret,
-      { expiresIn: expiresIn as any }
+      { expiresIn: expiresIn as jwt.SignOptions['expiresIn'] }
     );
 
     const userResponse: UserResponseDTO = {
